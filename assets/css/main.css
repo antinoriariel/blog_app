@@ -15,8 +15,8 @@
   --color-footer-bg:    #0d1117;
   --color-footer-text:  #adb5bd;
 
-  --font-body:    'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-heading: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body:    'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Fraunces', Georgia, 'Times New Roman', serif;
 
   --radius:     0.75rem;
   --radius-sm:  0.375rem;
@@ -31,15 +31,25 @@
    ============================================================ */
 *, *::before, *::after { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  height: 100%;
+}
 
 body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   font-family: var(--font-body);
   font-size: 1rem;
   line-height: 1.75;
   color: var(--color-text);
   background: var(--color-bg);
   -webkit-font-smoothing: antialiased;
+}
+
+#main-content {
+  flex: 1 0 auto;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -97,6 +107,56 @@ img { max-width: 100%; height: auto; }
 .site-navbar .nav-link:hover {
   color: var(--color-accent) !important;
   background: var(--color-accent-light);
+}
+
+/* Offcanvas mobile nav */
+.site-offcanvas {
+  border-left: 1px solid var(--color-border);
+}
+
+.site-offcanvas .offcanvas-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.site-offcanvas .offcanvas-body {
+  padding: 1.5rem;
+}
+
+.offcanvas-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.offcanvas-link {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--color-text);
+  text-decoration: none;
+  transition: background var(--transition), color var(--transition);
+}
+.offcanvas-link i {
+  width: 1.1rem;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  transition: color var(--transition);
+}
+.offcanvas-link:hover {
+  background: var(--color-accent-light);
+  color: var(--color-accent);
+}
+.offcanvas-link:hover i {
+  color: var(--color-accent);
 }
 
 /* ============================================================
@@ -708,10 +768,10 @@ img { max-width: 100%; height: auto; }
    FOOTER
    ============================================================ */
 .site-footer {
+  flex-shrink: 0;
   background: var(--color-footer-bg);
   color: var(--color-footer-text);
   padding: 2.5rem 0;
-  margin-top: 4rem;
   border-top: 1px solid #1e1e2e;
 }
 
