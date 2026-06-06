@@ -1,37 +1,108 @@
-# Blog estatica en Markdown
+# Blog estático en Markdown
 
-Repositorio base para un blog estatica que transforma archivos `.md` con una estructura definida en entradas HTML listas para publicar. El generador se ejecuta en Python en local y el resultado es un sitio estatica que puede desplegarse en hosting simple.
+Generador de sitio estático escrito en Python. Convierte archivos `.md` con frontmatter YAML en páginas HTML completas usando plantillas Jinja2. La salida es una carpeta `dist/` lista para subir a cualquier hosting estático.
 
-## Que pretende resolver
-- Convertir contenido Markdown en paginas de blog con una estructura uniforme.
-- Mantener una experiencia de escritura simple para crear nuevas entradas.
-- Separar contenido, plantillas, estilos y salida generada.
-- Ofrecer un diseno visual cuidado con Bootstrap, animate.css, Font Awesome y Google Fonts.
+## Inicio rápido
 
-## Stack previsto
-- Python para el algoritmo de conversion y build.
-- Markdown como formato de entrada.
-- Bootstrap para la base de layout y componentes.
-- animate.css para animaciones de entrada y microinteracciones puntuales.
-- Font Awesome para iconos.
-- Google Fonts para tipografia expresiva.
+```bash
+# 1. Instalar dependencias
+pip install -r requirements.txt
 
-## Documentacion principal
-- [Plan del proyecto](plan.md)
-- [Guia de uso](usage.md)
-- [Especificacion del proyecto](docs/especificacion.md)
-- [Formato de entradas](docs/formato-de-entradas.md)
-- [Arquitectura](docs/arquitectura.md)
-- [Diseno visual](docs/diseno-ui.md)
-- [Despliegue](docs/despliegue.md)
-- [Estructura del proyecto](docs/estructura-del-proyecto.md)
+# 2. Configurar el sitio (título, URL, autor…)
+# Editar config.yaml
 
-## Estructura propuesta
-- `content/` para las entradas Markdown y paginas estaticas.
-- `templates/` para las plantillas HTML.
-- `assets/` para CSS, JS, imagenes e iconos.
-- `scripts/` para el generador Python.
-- `dist/` para la salida compilada.
+# 3. Compilar
+python scripts/build.py
 
-## Estado actual
-La documentacion base esta definida. La implementacion del generador y de la UI queda lista para seguir sobre estas especificaciones.
+# 4. Verificar localmente
+cd dist && python -m http.server 8000
+```
+
+Abrir [http://localhost:8000](http://localhost:8000).
+
+## Agregar una entrada nueva
+
+1. Copiar `templates/new-post.md` a `content/posts/YYYY-MM-DD-mi-slug.md`.
+2. Completar el frontmatter (título, slug, fecha, resumen).
+3. Escribir el cuerpo en Markdown.
+4. Cambiar `published: false` a `published: true`.
+5. Ejecutar `python scripts/build.py`.
+
+Consultar [usage.md](usage.md) para la referencia completa del formato.
+
+## Estructura del proyecto
+
+```
+blog_app/
+├── content/
+│   ├── posts/          ← entradas del blog (.md)
+│   └── pages/          ← páginas estáticas (sobre, contacto…)
+├── templates/
+│   ├── base.html       ← layout base con nav y footer
+│   ├── index.html      ← portada
+│   ├── post.html       ← entrada individual
+│   ├── page.html       ← página estática
+│   ├── tag.html        ← listado por etiqueta
+│   ├── archive.html    ← archivo cronológico
+│   ├── 404.html        ← página de error
+│   └── new-post.md     ← plantilla para nuevas entradas
+├── assets/
+│   ├── css/main.css    ← estilos personalizados
+│   └── js/main.js      ← comportamiento del sitio
+├── scripts/
+│   ├── build.py        ← punto de entrada del generador
+│   ├── render.py       ← funciones de renderizado
+│   ├── utils.py        ← scanner, parser, validador
+│   └── config.py       ← carga de config.yaml
+├── docs/               ← documentación técnica
+├── dist/               ← salida compilada (no editar)
+├── config.yaml         ← configuración del sitio
+└── requirements.txt    ← dependencias Python
+```
+
+## Stack
+
+| Componente     | Tecnología                              |
+|---------------|------------------------------------------|
+| Generador     | Python 3.10+                             |
+| Plantillas    | Jinja2                                   |
+| Markdown      | python-markdown + extensiones            |
+| Metadatos     | PyYAML (frontmatter)                     |
+| Layout        | Bootstrap 5                              |
+| Tipografía    | Google Fonts (Playfair Display + Inter)  |
+| Iconos        | Font Awesome 6                           |
+| Animaciones   | animate.css                              |
+| Código        | Prism.js (resaltado de sintaxis)         |
+
+## Configuración
+
+Editar `config.yaml`:
+
+```yaml
+site:
+  title: "Mi Blog"
+  description: "Descripción del sitio."
+  author: "Nombre del Autor"
+  url: "https://mi-blog.com"
+  language: "es"
+
+build:
+  base_url: "/"          # cambiar si el sitio vive en una subcarpeta
+
+features:
+  tags: true
+  archive: true
+  sitemap: true
+  404: true
+```
+
+## Documentación
+
+- [Guía de uso](usage.md) — formato de entradas y flujo de trabajo
+- [Especificación](docs/especificacion.md) — requisitos funcionales
+- [Arquitectura](docs/arquitectura.md) — pipeline del generador
+- [Sistema visual](docs/sistema-visual.md) — guía de diseño
+- [Despliegue](docs/despliegue.md) — opciones de publicación
+- [Estructura del proyecto](docs/estructura-del-proyecto.md) — árbol de carpetas
+- [Calidad](docs/calidad.md) — criterios de aceptación
+- [Formato de entradas](docs/formato-de-entradas.md) — referencia del frontmatter

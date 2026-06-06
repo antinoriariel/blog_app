@@ -1,91 +1,141 @@
-# Guia de uso
+# Guía de uso
 
-Esta guia define como escribir entradas para el blog y como preparar el contenido para que el generador Python lo transforme en HTML.
+Referencia completa para escribir entradas, ejecutar el generador y mantener el sitio.
 
-## Flujo de trabajo
-1. Crear un archivo Markdown nuevo dentro de la carpeta de contenido.
-2. Escribir el frontmatter con los metadatos requeridos.
-3. Redactar el cuerpo de la entrada en Markdown.
-4. Ejecutar el generador local.
-5. Revisar la salida estatica antes de publicar.
+## Flujo de trabajo habitual
 
-## Formato general de una entrada
-Cada entrada debe tener dos partes:
-- Un bloque de metadatos al inicio, rodeado por lineas `---`.
-- El contenido del articulo en Markdown.
+```bash
+# Crear una entrada nueva
+cp templates/new-post.md content/posts/2026-06-10-mi-entrada.md
 
-Ejemplo minimo:
+# Editar el archivo y escribir el contenido
+# ...
 
-```md
+# Compilar
+python scripts/build.py
+
+# Revisar localmente
+cd dist && python -m http.server 8000
+```
+
+## Frontmatter — referencia completa
+
+Cada archivo `.md` debe comenzar con un bloque YAML entre `---`:
+
+```yaml
 ---
-title: "Mi primera entrada"
-slug: "mi-primera-entrada"
-date: "2026-06-05"
-summary: "Resumen breve de la publicacion."
+title: "Título visible de la entrada"
+slug: "titulo-visible-de-la-entrada"
+date: "2026-06-10"
+summary: "Resumen breve. Aparece en tarjetas, listados y como meta description."
 tags:
-  - blog
   - python
-  - static
+  - tutorial
+category: "técnico"
+author: "Nombre del Autor"
+cover: "assets/img/posts/mi-slug/cover.jpg"
+featured: false
+published: true
+---
+```
+
+### Campos
+
+| Campo       | Tipo      | Obligatorio | Descripción                                                  |
+|-------------|-----------|-------------|--------------------------------------------------------------|
+| `title`     | texto     | **sí**      | Título de la entrada. Aparece como `<h1>` y en `<title>`.    |
+| `slug`      | texto     | **sí**      | URL amigable. Solo minúsculas, números y guiones.            |
+| `date`      | ISO 8601  | **sí**      | Fecha de publicación: `YYYY-MM-DD`.                          |
+| `summary`   | texto     | **sí**      | Resumen de 1-2 oraciones para tarjetas y SEO.                |
+| `tags`      | lista     | no          | Etiquetas temáticas. Generan páginas `/etiquetas/<tag>/`.    |
+| `category`  | texto     | no          | Categoría principal visible en la tarjeta.                   |
+| `author`    | texto     | no          | Nombre del autor. Visible en la cabecera del post.           |
+| `cover`     | ruta      | no          | Imagen de portada. Ruta relativa a la raíz del proyecto.     |
+| `featured`  | booleano  | no          | `true` para destacar la entrada en la portada.               |
+| `published` | booleano  | no          | `false` para excluir del build. Por defecto `true`.          |
+
+## Convenciones de nombre de archivo
+
+```
+YYYY-MM-DD-slug.md
+```
+
+Ejemplo: `2026-06-10-como-usar-jinja2.md`
+
+- El slug del nombre de archivo y el `slug` del frontmatter deben coincidir.
+- No uses espacios ni caracteres especiales en el nombre.
+- Los borradores pueden nombrarse `_draft-titulo.md` (el guión bajo los excluye del glob por convención, pero es más seguro usar `published: false`).
+
+## Cuerpo del artículo
+
+El cuerpo puede usar Markdown completo. Extensiones habilitadas:
+
+- **Tablas** — sintaxis GFM estándar.
+- **Bloques de código** — con triple backtick y nombre de lenguaje:
+  ````
+  ```python
+  print("hola")
+  ```
+  ````
+- **Tabla de contenidos** — insertar `[TOC]` donde querés que aparezca.
+- **Notas al pie** — `Texto[^1]` y `[^1]: Nota.` al final.
+- **Saltos de línea** — una línea en blanco es un párrafo nuevo.
+
+## Imágenes
+
+Guardar las imágenes en `assets/img/posts/<slug>/` y referenciarlas así:
+
+```markdown
+![Descripción](../../assets/img/posts/mi-slug/imagen.jpg)
+```
+
+En el frontmatter, la ruta de `cover` es relativa a la raíz:
+
+```yaml
+cover: "assets/img/posts/mi-slug/cover.jpg"
+```
+
+## Páginas estáticas
+
+Las páginas (sobre, contacto, etc.) van en `content/pages/`. Tienen el mismo formato de frontmatter. No aparecen en listados de entradas pero sí en el navbar.
+
+Ejemplo mínimo:
+
+```markdown
+---
+title: "Sobre"
+slug: "sobre"
+summary: "Quién escribe este blog."
 published: true
 ---
 
-# Mi primera entrada
-
-Texto del articulo.
+Contenido de la página.
 ```
 
-## Campos recomendados
-| Campo | Tipo | Requerido | Uso |
-| --- | --- | --- | --- |
-| `title` | texto | si | Titulo visible de la entrada y etiqueta principal de la pagina. |
-| `slug` | texto | si | Nombre amigable para la URL. |
-| `date` | fecha ISO | si | Orden cronologico y metadatos. |
-| `summary` | texto | si | Resumen para tarjetas, SEO y listados. |
-| `tags` | lista | no | Agrupacion tematica. |
-| `category` | texto | no | Seccion principal de la entrada. |
-| `author` | texto | no | Nombre del autor. |
-| `cover` | ruta | no | Imagen principal de la entrada. |
-| `published` | booleano | no | Control de publicacion. |
-| `featured` | booleano | no | Marca para destacar la entrada en la portada. |
+## Ejecutar el build
 
-## Reglas de contenido
-- El titulo principal de la pagina se toma desde `title`; evita duplicarlo como primer encabezado si el generador ya lo inserta.
-- Usa un solo `h1` por entrada si el renderizador no lo crea automaticamente.
-- Mantiene los enlaces relativos y las imagenes dentro de rutas que el build pueda copiar.
-- Usa bloques de codigo con triple acento invertido y especifica el lenguaje cuando sea posible.
-- No mezcles estilos inline con el Markdown; el estilo debe vivir en las plantillas o en CSS.
-
-## Convenciones de archivo
-- Recomendado: `YYYY-MM-DD-slug.md`.
-- El `slug` debe ser estable y no cambiar sin necesidad.
-- Los borradores deben quedarse fuera de la carpeta publicada o marcarse con `published: false`.
-
-## Ejemplo completo
-```md
----
-title: "Construyendo un blog estatica con Python"
-slug: "construyendo-un-blog-estatica-con-python"
-date: "2026-06-05"
-summary: "Base documental y tecnica para generar un blog a partir de Markdown."
-tags:
-  - python
-  - markdown
-  - blog
-category: "proyecto"
-author: "Equipo del blog"
-cover: "assets/posts/construyendo-un-blog-estatica-con-python/cover.jpg"
-featured: true
-published: true
----
-
-# Construyendo un blog estatica con Python
-
-Este articulo explica como el generador toma el contenido Markdown y lo convierte en una pagina HTML con estilo, navegacion y metadatos.
+```bash
+python scripts/build.py
 ```
 
-## Lista de verificacion antes de publicar
-- El frontmatter contiene todos los campos obligatorios.
-- La ruta de portada y demas imagenes existe en la carpeta de assets.
-- El resumen es breve y util para tarjetas y SEO.
-- El articulo se ve bien en desktop y mobile.
-- El build local no reporta errores de formato.
+Salida esperada:
+
+```
+Limpiando salida anterior en dist/ ...
+✓ Build completado
+  2 entrada(s) · 2 página(s)
+  Salida: dist/
+```
+
+Si hay errores de validación, aparecen antes del resumen con `✗`.
+
+## Lista de verificación antes de publicar
+
+- [ ] Todos los campos obligatorios están completos.
+- [ ] El slug es único y no tiene caracteres inválidos.
+- [ ] La fecha está en formato `YYYY-MM-DD`.
+- [ ] El resumen tiene entre 80 y 160 caracteres.
+- [ ] Las rutas de imágenes existen en `assets/`.
+- [ ] `published: true` está activo.
+- [ ] El build local no reporta errores.
+- [ ] El sitio se ve bien en desktop y mobile.
