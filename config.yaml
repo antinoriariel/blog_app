@@ -1,0 +1,21 @@
+site:
+  title: "Mi Blog"
+  description: "Un blog sobre tecnología, desarrollo y proyectos personales."
+  author: "Nombre del Autor"
+  url: "https://mi-blog.com"
+  language: "es"
+
+build:
+  content_dir: "content"
+  templates_dir: "templates"
+  assets_dir: "assets"
+  output_dir: "dist"
+  base_url: "/"
+  posts_per_page: 10
+
+features:
+  tags: true
+  archive: true
+  sitemap: true
+  rss: false
+  page_404: true
