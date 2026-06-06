@@ -35,9 +35,9 @@ def build():
     templates_dir = base_dir / cfg["build"]["templates_dir"]
 
     print(f"Limpiando salida anterior en {output_dir} ...")
-    if output_dir.exists():
-        shutil.rmtree(output_dir)
-    output_dir.mkdir(parents=True)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    for item in output_dir.iterdir():
+        shutil.rmtree(item, ignore_errors=True) if item.is_dir() else item.unlink(missing_ok=True)
 
     copy_assets(assets_dir, output_dir / "assets")
 
