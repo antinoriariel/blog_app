@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}{% if tag %}Etiqueta: {{ tag }}{% else %}Etiquetas{% endif %} — {{ site.title }}{% endblock %}
+{% block description %}{% if tag %}Entradas etiquetadas con "{{ tag }}" en {{ site.title }}{% else %}Todas las etiquetas de {{ site.title }}{% endif %}{% endblock %}
+
+{% block content %}
+
+  <div class="container post-container">
+
+    <nav aria-label="breadcrumb" class="post-breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{{ base_url }}"><i class="fa-solid fa-house me-1"></i>Inicio</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="{{ base_url }}etiquetas/">Etiquetas</a>
+        </li>
+        {% if tag %}
+        <li class="breadcrumb-item active" aria-current="page">{{ tag }}</li>
+        {% endif %}
+      </ol>
+    </nav>
+
+    {% if tag %}
+
+      <!-- Single tag view -->
+      <header class="page-header animate__animated animate__fadeInDown">
+        <h1 class="page-title">
+          <i class="fa-solid fa-tag me-2"></i>{{ tag }}
+        </h1>
+        <p class="text-muted">
+          {{ posts | length }} entrada{% if posts | length != 1 %}s{% endif %}
+        </p>
+      </header>
+
+      {% if posts %}
+      <div class="post-list">
+        {% for post in posts %}
+        <article class="post-card animate__animated animate__fadeInUp" style="animation-delay: {{ loop.index0 * 60 }}ms">
+          <div class="post-card-body">
+            <div class="post-meta mb-1">
+              <span><i class="fa-regular fa-calendar me-1"></i>{{ post.meta.date | date }}</span>
+            </div>
+            <h3 class="post-card-title">
+              <a href="{{ base_url }}posts/{{ post.meta.slug }}/">{{ post.meta.title }}</a>
+            </h3>
+            <p class="post-card-summary">{{ post.meta.summary }}</p>
+            {% if post.meta.tags %}
+            <div class="tag-list mt-2">
+              {% for t in post.meta.tags %}
+              <a href="{{ base_url }}etiquetas/{{ t | slugify }}/" class="tag {% if t == tag %}tag-active{% endif %}">{{ t }}</a>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+    {% else %}
+
+      <!-- All tags index -->
+      <header class="page-header animate__animated animate__fadeInDown">
+        <h1 class="page-title">
+          <i class="fa-solid fa-tags me-2"></i>Etiquetas
+        </h1>
+      </header>
+
+      <div class="tag-index animate__animated animate__fadeInUp">
+        {% for t, t_posts in all_tags.items() %}
+        <a href="{{ base_url }}etiquetas/{{ t | slugify }}/" class="tag-index-item">
+          <span class="tag-index-name">{{ t }}</span>
+          <span class="tag-index-count">{{ t_posts | length }}</span>
+        </a>
+        {% endfor %}
+      </div>
+
+    {% endif %}
+
+  </div>
+
+{% endblock %}

@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.meta.title }} — {{ site.title }}{% endblock %}
+{% block description %}{{ post.meta.summary }}{% endblock %}
+
+{% block og_type %}article{% endblock %}
+{% block og_title %}{{ post.meta.title }}{% endblock %}
+{% block og_description %}{{ post.meta.summary }}{% endblock %}
+{% block og_url %}{{ site.url }}/posts/{{ post.meta.slug }}/{% endblock %}
+{% block og_image %}
+{% if post.meta.cover %}
+<meta property="og:image" content="{{ site.url }}/{{ post.meta.cover }}">
+{% endif %}
+{% endblock %}
+
+{% block meta %}
+<meta name="keywords" content="{{ post.meta.tags | join(', ') if post.meta.tags else '' }}">
+<link rel="canonical" href="{{ site.url }}/posts/{{ post.meta.slug }}/">
+{% endblock %}
+
+{% block content %}
+
+  <div class="container post-container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="post-breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="{{ base_url }}"><i class="fa-solid fa-house me-1"></i>Inicio</a>
+            </li>
+            {% if post.meta.category %}
+            <li class="breadcrumb-item text-muted">{{ post.meta.category }}</li>
+            {% endif %}
+            <li class="breadcrumb-item active" aria-current="page">{{ post.meta.title }}</li>
+          </ol>
+        </nav>
+
+        <!-- Post header -->
+        <header class="post-header animate__animated animate__fadeInDown">
+          {% if post.meta.tags %}
+          <div class="tag-list mb-3">
+            {% for tag in post.meta.tags %}
+            <a href="{{ base_url }}etiquetas/{{ tag | slugify }}/" class="tag">{{ tag }}</a>
+            {% endfor %}
+          </div>
+          {% endif %}
+
+          <h1 class="post-title">{{ post.meta.title }}</h1>
+          <p class="post-summary lead">{{ post.meta.summary }}</p>
+
+          <div class="post-byline">
+            <span>
+              <i class="fa-regular fa-calendar me-1"></i>
+              <time datetime="{{ post.meta.date }}">{{ post.meta.date | date }}</time>
+            </span>
+            {% if post.meta.author %}
+            <span class="ms-4">
+              <i class="fa-regular fa-user me-1"></i>{{ post.meta.author }}
+            </span>
+            {% endif %}
+            {% if post.meta.category %}
+            <span class="ms-4">
+              <i class="fa-solid fa-folder me-1"></i>{{ post.meta.category }}
+            </span>
+            {% endif %}
+          </div>
+        </header>
+
+        <!-- Cover image -->
+        {% if post.meta.cover %}
+        <div class="post-cover animate__animated animate__fadeIn">
+          <img src="{{ base_url }}{{ post.meta.cover }}" alt="{{ post.meta.title }}" class="img-fluid rounded">
+        </div>
+        {% endif %}
+
+        <!-- Post body -->
+        <div class="post-body animate__animated animate__fadeInUp">
+          {{ post.body_html | safe }}
+        </div>
+
+        <!-- Post footer -->
+        <footer class="post-footer">
+          {% if post.meta.tags %}
+          <div class="post-tags">
+            <i class="fa-solid fa-tags me-2 text-muted"></i>
+            {% for tag in post.meta.tags %}
+            <a href="{{ base_url }}etiquetas/{{ tag | slugify }}/" class="tag">{{ tag }}</a>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </footer>
+
+        <!-- Prev / Next navigation -->
+        {% if prev_post or next_post %}
+        <nav class="post-nav" aria-label="Navegación entre entradas">
+          <div class="row g-3">
+            {% if prev_post %}
+            <div class="col-6">
+              <a href="{{ base_url }}posts/{{ prev_post.meta.slug }}/" class="post-nav-link post-nav-prev">
+                <span class="post-nav-label">
+                  <i class="fa-solid fa-arrow-left me-1"></i>Anterior
+                </span>
+                <span class="post-nav-title">{{ prev_post.meta.title }}</span>
+              </a>
+            </div>
+            {% endif %}
+            {% if next_post %}
+            <div class="col-6 {% if not prev_post %}offset-6{% endif %}">
+              <a href="{{ base_url }}posts/{{ next_post.meta.slug }}/" class="post-nav-link post-nav-next text-end">
+                <span class="post-nav-label">
+                  Siguiente <i class="fa-solid fa-arrow-right ms-1"></i>
+                </span>
+                <span class="post-nav-title">{{ next_post.meta.title }}</span>
+              </a>
+            </div>
+            {% endif %}
+          </div>
+        </nav>
+        {% endif %}
+
+      </div>
+
+      <!-- Sidebar -->
+      <div class="col-lg-3 offset-lg-1">
+        <aside class="sidebar post-sidebar">
+          {% if features.tags and all_tags %}
+          <div class="sidebar-widget">
+            <h4 class="sidebar-title">
+              <i class="fa-solid fa-tags me-2"></i>Etiquetas
+            </h4>
+            <div class="tag-cloud">
+              {% for tag, tag_posts in all_tags.items() %}
+              <a href="{{ base_url }}etiquetas/{{ tag | slugify }}/" class="tag {% if post.meta.tags and tag in post.meta.tags %}tag-active{% endif %}">
+                {{ tag }}
+              </a>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+        </aside>
+      </div>
+
+    </div>
+  </div>
+
+{% endblock %}

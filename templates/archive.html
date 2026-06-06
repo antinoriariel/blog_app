@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Archivo — {{ site.title }}{% endblock %}
+{% block description %}Archivo completo de entradas de {{ site.title }}{% endblock %}
+
+{% block content %}
+
+  <div class="container post-container">
+
+    <nav aria-label="breadcrumb" class="post-breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{{ base_url }}"><i class="fa-solid fa-house me-1"></i>Inicio</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Archivo</li>
+      </ol>
+    </nav>
+
+    <header class="page-header animate__animated animate__fadeInDown">
+      <h1 class="page-title">
+        <i class="fa-solid fa-calendar-days me-2"></i>Archivo
+      </h1>
+      <p class="text-muted">{{ posts | length }} entrada{% if posts | length != 1 %}s{% endif %} publicada{% if posts | length != 1 %}s{% endif %}</p>
+    </header>
+
+    <div class="archive-list animate__animated animate__fadeInUp">
+      {% for month_key, month_data in by_month.items() %}
+      <div class="archive-month">
+        <h2 class="archive-month-title">
+          <i class="fa-regular fa-calendar me-2"></i>{{ month_data.label }}
+          <span class="archive-count">{{ month_data.posts | length }}</span>
+        </h2>
+        <ul class="archive-entries">
+          {% for post in month_data.posts %}
+          <li class="archive-entry">
+            <time class="archive-date">{{ post.meta.date | date('%d %b') }}</time>
+            <a href="{{ base_url }}posts/{{ post.meta.slug }}/" class="archive-title">
+              {{ post.meta.title }}
+            </a>
+            {% if post.meta.tags %}
+            <span class="archive-tags">
+              {% for tag in post.meta.tags %}
+              <a href="{{ base_url }}etiquetas/{{ tag | slugify }}/" class="tag tag-sm">{{ tag }}</a>
+              {% endfor %}
+            </span>
+            {% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+
+{% endblock %}

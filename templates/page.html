@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.meta.title }} — {{ site.title }}{% endblock %}
+{% block description %}{{ page.meta.summary }}{% endblock %}
+
+{% block content %}
+
+  <div class="container post-container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+
+        <nav aria-label="breadcrumb" class="post-breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="{{ base_url }}"><i class="fa-solid fa-house me-1"></i>Inicio</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">{{ page.meta.title }}</li>
+          </ol>
+        </nav>
+
+        <header class="post-header animate__animated animate__fadeInDown">
+          <h1 class="post-title">{{ page.meta.title }}</h1>
+          {% if page.meta.summary %}
+          <p class="post-summary lead">{{ page.meta.summary }}</p>
+          {% endif %}
+        </header>
+
+        <div class="post-body animate__animated animate__fadeInUp">
+          {{ page.body_html | safe }}
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block title %}{{ site.title }} — {{ site.description }}{% endblock %}
+
+{% block content %}
+
+  <!-- Hero -->
+  <section class="hero animate__animated animate__fadeIn">
+    <div class="container">
+      <div class="hero-inner">
+        <p class="hero-eyebrow">
+          <i class="fa-solid fa-pen-nib me-2"></i>Bienvenido
+        </p>
+        <h1 class="hero-title">{{ site.title }}</h1>
+        <p class="hero-desc">{{ site.description }}</p>
+        {% if posts %}
+        <a href="#entradas" class="btn btn-accent mt-2">
+          Últimas entradas <i class="fa-solid fa-arrow-down ms-2"></i>
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured post (if any) -->
+  {% if featured %}
+  <section class="section-featured">
+    <div class="container">
+      <h2 class="section-label">
+        <i class="fa-solid fa-star me-2"></i>Entrada destacada
+      </h2>
+      {% set fp = featured[0] %}
+      <a href="{{ base_url }}posts/{{ fp.meta.slug }}/" class="featured-card">
+        {% if fp.meta.cover %}
+        <div class="featured-cover">
+          <img src="{{ base_url }}{{ fp.meta.cover }}" alt="{{ fp.meta.title }}">
+        </div>
+        {% endif %}
+        <div class="featured-body">
+          <div class="post-meta mb-2">
+            <span><i class="fa-regular fa-calendar me-1"></i>{{ fp.meta.date | date }}</span>
+            {% if fp.meta.category %}
+            <span class="ms-3">
+              <i class="fa-solid fa-folder me-1"></i>{{ fp.meta.category }}
+            </span>
+            {% endif %}
+          </div>
+          <h3 class="featured-title">{{ fp.meta.title }}</h3>
+          <p class="featured-summary">{{ fp.meta.summary }}</p>
+          <span class="read-more">
+            Leer artículo <i class="fa-solid fa-arrow-right ms-1"></i>
+          </span>
+        </div>
+      </a>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- Post list -->
+  <section class="section-posts" id="entradas">
+    <div class="container">
+      <div class="row g-4">
+
+        <!-- Main column -->
+        <div class="col-lg-8">
+          <h2 class="section-label">
+            <i class="fa-solid fa-newspaper me-2"></i>Últimas entradas
+          </h2>
+
+          {% if posts %}
+          <div class="post-list">
+            {% for post in posts %}
+            <article class="post-card animate__animated animate__fadeInUp" style="animation-delay: {{ loop.index0 * 60 }}ms">
+              <div class="post-card-body">
+                <div class="post-meta mb-1">
+                  <span>
+                    <i class="fa-regular fa-calendar me-1"></i>{{ post.meta.date | date }}
+                  </span>
+                  {% if post.meta.author %}
+                  <span class="ms-3">
+                    <i class="fa-regular fa-user me-1"></i>{{ post.meta.author }}
+                  </span>
+                  {% endif %}
+                  {% if post.meta.category %}
+                  <span class="ms-3">
+                    <i class="fa-solid fa-folder me-1"></i>{{ post.meta.category }}
+                  </span>
+                  {% endif %}
+                </div>
+                <h3 class="post-card-title">
+                  <a href="{{ base_url }}posts/{{ post.meta.slug }}/">{{ post.meta.title }}</a>
+                </h3>
+                <p class="post-card-summary">{{ post.meta.summary }}</p>
+                {% if post.meta.tags %}
+                <div class="tag-list mt-2">
+                  {% for tag in post.meta.tags %}
+                  <a href="{{ base_url }}etiquetas/{{ tag | slugify }}/" class="tag">{{ tag }}</a>
+                  {% endfor %}
+                </div>
+                {% endif %}
+              </div>
+              {% if post.meta.cover %}
+              <div class="post-card-cover">
+                <img src="{{ base_url }}{{ post.meta.cover }}" alt="{{ post.meta.title }}">
+              </div>
+              {% endif %}
+            </article>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div class="empty-state">
+            <i class="fa-solid fa-inbox fa-2x mb-3"></i>
+            <p>Aún no hay entradas publicadas.</p>
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+          <aside class="sidebar">
+
+            {% if features.tags and all_tags %}
+            <div class="sidebar-widget">
+              <h4 class="sidebar-title">
+                <i class="fa-solid fa-tags me-2"></i>Etiquetas
+              </h4>
+              <div class="tag-cloud">
+                {% for tag, tag_posts in all_tags.items() %}
+                <a href="{{ base_url }}etiquetas/{{ tag | slugify }}/" class="tag">
+                  {{ tag }}
+                  <span class="tag-count">{{ tag_posts | length }}</span>
+                </a>
+                {% endfor %}
+              </div>
+            </div>
+            {% endif %}
+
+            {% if features.archive %}
+            <div class="sidebar-widget">
+              <h4 class="sidebar-title">
+                <i class="fa-solid fa-calendar-days me-2"></i>Archivo
+              </h4>
+              <a href="{{ base_url }}archivo/" class="btn btn-outline-secondary btn-sm w-100">
+                Ver archivo completo
+              </a>
+            </div>
+            {% endif %}
+
+          </aside>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

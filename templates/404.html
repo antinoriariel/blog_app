@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Página no encontrada — {{ site.title }}{% endblock %}
+{% block description %}La página que buscas no existe.{% endblock %}
+
+{% block content %}
+
+  <div class="container post-container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 text-center">
+
+        <div class="error-page animate__animated animate__fadeIn">
+          <div class="error-code">404</div>
+          <h1 class="error-title">Página no encontrada</h1>
+          <p class="error-desc text-muted">
+            La URL que buscas no existe o fue movida.
+          </p>
+          <a href="{{ base_url }}" class="btn btn-accent mt-3">
+            <i class="fa-solid fa-house me-2"></i>Volver al inicio
+          </a>
+        </div>
+
+        {% if posts %}
+        <div class="mt-5 text-start">
+          <h2 class="section-label">
+            <i class="fa-solid fa-newspaper me-2"></i>Últimas entradas
+          </h2>
+          <ul class="list-unstyled">
+            {% for post in posts %}
+            <li class="mb-2">
+              <a href="{{ base_url }}posts/{{ post.meta.slug }}/" class="post-link">
+                {{ post.meta.title }}
+              </a>
+              <span class="text-muted small ms-2">{{ post.meta.date | date }}</span>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
