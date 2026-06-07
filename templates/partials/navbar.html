@@ -1,0 +1,89 @@
+<!-- Navbar -->
+<nav class="navbar sticky-top site-navbar" id="main-nav">
+  <div class="container">
+    <a class="navbar-brand site-brand" href="{{ base_url }}">
+      <i class="fa-solid fa-pen-nib brand-icon"></i>
+      <span class="brand-text">{{ site.title }}</span>
+    </a>
+
+    <!-- Desktop links (lg+) -->
+    <ul class="navbar-nav d-none d-lg-flex flex-row align-items-center gap-1 ms-auto mb-0">
+      <li class="nav-item">
+        <a class="nav-link" href="{{ base_url }}">
+          <i class="fa-solid fa-house me-1"></i>Inicio
+        </a>
+      </li>
+      {% if features.archive %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{ base_url }}archivo/">
+          <i class="fa-solid fa-calendar-days me-1"></i>Archivo
+        </a>
+      </li>
+      {% endif %}
+      {% if features.tags %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{ base_url }}etiquetas/">
+          <i class="fa-solid fa-tags me-1"></i>Etiquetas
+        </a>
+      </li>
+      {% endif %}
+      {% for page in pages %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{ base_url }}{{ page.meta.slug }}/">
+          {{ page.meta.title }}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+
+    <!-- Mobile toggler (below lg) -->
+    <button class="navbar-toggler d-lg-none" type="button"
+            data-bs-toggle="offcanvas" data-bs-target="#navOffcanvas"
+            aria-controls="navOffcanvas" aria-label="Abrir menú">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Offcanvas mobile nav -->
+<div class="offcanvas offcanvas-end site-offcanvas" tabindex="-1"
+     id="navOffcanvas" aria-labelledby="navOffcanvasLabel">
+  <div class="offcanvas-header">
+    <a class="navbar-brand site-brand" href="{{ base_url }}" id="navOffcanvasLabel">
+      <i class="fa-solid fa-pen-nib brand-icon"></i>
+      <span class="brand-text">{{ site.title }}</span>
+    </a>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+            aria-label="Cerrar"></button>
+  </div>
+  <div class="offcanvas-body">
+    <ul class="offcanvas-nav">
+      <li>
+        <a class="offcanvas-link" href="{{ base_url }}" data-bs-dismiss="offcanvas">
+          <i class="fa-solid fa-house"></i>Inicio
+        </a>
+      </li>
+      {% if features.archive %}
+      <li>
+        <a class="offcanvas-link" href="{{ base_url }}archivo/" data-bs-dismiss="offcanvas">
+          <i class="fa-solid fa-calendar-days"></i>Archivo
+        </a>
+      </li>
+      {% endif %}
+      {% if features.tags %}
+      <li>
+        <a class="offcanvas-link" href="{{ base_url }}etiquetas/" data-bs-dismiss="offcanvas">
+          <i class="fa-solid fa-tags"></i>Etiquetas
+        </a>
+      </li>
+      {% endif %}
+      {% for page in pages %}
+      <li>
+        <a class="offcanvas-link" href="{{ base_url }}{{ page.meta.slug }}/" data-bs-dismiss="offcanvas">
+          <i class="fa-solid fa-file-lines"></i>{{ page.meta.title }}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>

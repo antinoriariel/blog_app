@@ -19,3 +19,8 @@ features:
   sitemap: true
   rss: false
   page_404: true
+
+social:
+  github: ""
+  youtube: ""
+  x: ""

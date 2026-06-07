@@ -22,6 +22,7 @@ def _make_env(templates_dir, cfg):
     env.globals["site"] = cfg["site"]
     env.globals["base_url"] = cfg["build"].get("base_url", "/")
     env.globals["features"] = cfg.get("features", {})
+    env.globals["social"] = cfg.get("social", {})
 
     return env
 
