@@ -9,7 +9,7 @@ published: true
 
 Podés escribirme a:
 
-- **Email**: tu-email@ejemplo.com
-- **GitHub**: [github.com/tu-usuario](https://github.com)
+- **Email**: ariel@antinori.com.ar
+- **GitHub**: [github.com/antinoriariel](https://github.com/antinoriariel)
 
 Respondo en los próximos días cuando puedo. Los mensajes sobre el blog, el código o errores que encontraste son bienvenidos.
