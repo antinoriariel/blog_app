@@ -79,7 +79,7 @@ El cuerpo Markdown se convierte a HTML usando la librería `markdown` de Python 
 | `footnotes` | Notas al pie                           |
 | `nl2br`     | Saltos de línea como `<br>`            |
 
-El HTML resultante se inserta en una plantilla Jinja2 con `{{ post.body_html | safe }}`.
+El HTML resultante se inserta en una plantilla Jinja2 con `{{ post.body_html | safe }}`. El resaltado de sintaxis lo maneja **highlight.js** en el cliente: detecta automáticamente el lenguaje si no se especifica en el bloque, y aplica el tema `atom-one-dark`.
 
 ## El ensamblador
 

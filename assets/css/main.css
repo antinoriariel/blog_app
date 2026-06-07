@@ -542,14 +542,19 @@ img { max-width: 100%; height: auto; }
 }
 
 .post-body pre {
-  background: #1e1e2e;
-  border-radius: var(--radius-sm);
-  padding: 1.25rem;
-  overflow-x: auto;
   margin: 1.5rem 0;
+  border-radius: var(--radius-sm);
   font-size: 0.875rem;
   line-height: 1.6;
-  border: 1px solid #2d2d3d;
+  overflow: hidden;
+}
+
+/* hljs sets its own background/color/padding on the inner <code> element */
+.post-body pre code.hljs {
+  border-radius: 0;
+  font-size: inherit;
+  line-height: inherit;
+  overflow-x: auto;
 }
 
 .post-body code {

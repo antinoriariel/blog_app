@@ -35,7 +35,7 @@ El blog en sí es un generador estático escrito en Python. Funciona así:
 3. El generador valida el frontmatter, convierte el Markdown a HTML y lo mete dentro de plantillas Jinja2.
 4. La salida es una carpeta `dist/` con HTML puro, lista para subir a cualquier hosting estático.
 
-El diseño usa Bootstrap 5, Font Awesome, Google Fonts (Playfair Display + Inter) y animate.css para las transiciones.
+El diseño usa Bootstrap 5, Font Awesome, Google Fonts (Fraunces + DM Sans), animate.css para las transiciones y highlight.js para el resaltado de sintaxis con detección automática de lenguaje.
 
 ### Dependencias Python
 
