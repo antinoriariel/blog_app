@@ -23,4 +23,4 @@ El código está disponible en el repositorio del proyecto si querés ver cómo 
 
 ## Contacto
 
-Si querés contactarme, podés hacerlo desde la [página de contacto](/contacto/).
+Si querés contactarme, podés hacerlo desde la [página de contacto](../contacto/).

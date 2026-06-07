@@ -49,7 +49,9 @@ def render_index(posts, pages, cfg, templates_dir):
     tmpl = env.get_template("index.html")
 
     featured = [p for p in posts if p["meta"].get("featured")]
-    recent = posts[: cfg["build"].get("posts_per_page", 10)]
+    featured_slugs = {p["meta"]["slug"] for p in featured}
+    per_page = cfg["build"].get("posts_per_page", 10)
+    recent = [p for p in posts if p["meta"]["slug"] not in featured_slugs][:per_page]
 
     return tmpl.render(
         posts=recent,
@@ -107,6 +109,7 @@ def render_404(all_posts, pages, cfg, templates_dir):
 
 def render_sitemap(posts, pages, cfg):
     base = cfg["site"]["url"].rstrip("/")
+    features = cfg.get("features", {})
     lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
@@ -119,5 +122,11 @@ def render_sitemap(posts, pages, cfg):
     for page in pages:
         slug = page["meta"]["slug"]
         lines.append(f"  <url><loc>{base}/{slug}/</loc></url>")
+    if features.get("archive"):
+        lines.append(f"  <url><loc>{base}/archivo/</loc></url>")
+    if features.get("tags"):
+        lines.append(f"  <url><loc>{base}/etiquetas/</loc></url>")
+        for tag in group_by_tag(posts):
+            lines.append(f"  <url><loc>{base}/etiquetas/{slugify(tag)}/</loc></url>")
     lines.append("</urlset>")
     return "\n".join(lines)

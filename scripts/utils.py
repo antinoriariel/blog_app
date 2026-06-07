@@ -1,5 +1,6 @@
 import re
 import shutil
+import unicodedata
 from pathlib import Path
 from datetime import date, datetime
 
@@ -12,9 +13,15 @@ REQUIRED_FIELDS       = REQUIRED_FIELDS_POST  # default; callers can override
 
 _MD_EXTENSIONS = ["tables", "fenced_code", "toc", "attr_list", "footnotes", "nl2br"]
 
+# Matches the opening --- and closing --- of a YAML frontmatter block.
+# Handles trailing spaces after the dashes and both LF/CRLF line endings.
+_FRONTMATTER_RE = re.compile(r'\A---[ \t]*\n(.*?)\n---[ \t]*\n?(.*)', re.DOTALL)
+
 
 def slugify(text):
     text = str(text).lower().strip()
+    # Decompose unicode (á → a + combining accent) then drop non-ASCII
+    text = unicodedata.normalize('NFKD', text).encode('ascii', 'ignore').decode('ascii')
     text = re.sub(r"[^\w\s-]", "", text)
     text = re.sub(r"[\s_]+", "-", text)
     return re.sub(r"-+", "-", text)
@@ -28,20 +35,21 @@ def scan_posts(directory):
 
 
 def parse_entry(path):
-    text = Path(path).read_text(encoding="utf-8")
+    # utf-8-sig strips the UTF-8 BOM automatically if present
+    text = Path(path).read_text(encoding="utf-8-sig")
+    text = text.replace('\r\n', '\n').replace('\r', '\n')
 
-    if not text.startswith("---"):
-        raise ValueError("El archivo no tiene bloque frontmatter inicial")
+    m = _FRONTMATTER_RE.match(text)
+    if not m:
+        raise ValueError(
+            f"Frontmatter inválido en {Path(path).name}: el archivo debe empezar con ---"
+        )
 
-    parts = text.split("---", 2)
-    if len(parts) < 3:
-        raise ValueError("Frontmatter malformado: falta el cierre '---'")
-
-    meta = yaml.safe_load(parts[1])
+    meta = yaml.safe_load(m.group(1))
     if not isinstance(meta, dict):
-        raise ValueError("El frontmatter no es un diccionario YAML válido")
+        raise ValueError(f"El frontmatter no es un diccionario YAML válido en {Path(path).name}")
 
-    body = parts[2].strip()
+    body = m.group(2).strip()
 
     # Normalize date to a date object
     if "date" in meta:
