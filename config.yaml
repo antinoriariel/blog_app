@@ -1,8 +1,8 @@
 site:
-  title: "Mi Blog"
-  description: "Un blog sobre tecnología, desarrollo y proyectos personales."
-  author: "Nombre del Autor"
-  url: "https://mi-blog.com"
+  title: "Antinori - Blog"
+  description: "Un blog sobre programación, cyberseguridad, desarrollo y proyectos personales."
+  author: "Ariel Antinori"
+  url: "https://blog.antinori.com.ar"
   language: "es"
 
 build:
@@ -21,6 +21,6 @@ features:
   page_404: true
 
 social:
-  github: ""
-  youtube: ""
-  x: ""
+  github: "https://github.com/antinoriariel"
+  youtube: "https://youtube.com/@antinori_ariel"
+  x: "https://x.com/antinori_ariel"
