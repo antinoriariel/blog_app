@@ -3,6 +3,7 @@ title: "Sobre"
 slug: "sobre"
 summary: "Quién escribe este blog y de qué trata."
 published: true
+icon: "fa-solid fa-cube me-1"
 ---
 
 ## Hola

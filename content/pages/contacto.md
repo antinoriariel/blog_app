@@ -3,6 +3,7 @@ title: "Contacto"
 slug: "contacto"
 summary: "Cómo ponerse en contacto."
 published: true
+icon: "fa-solid fa-phone me-1"
 ---
 
 ## Contacto
