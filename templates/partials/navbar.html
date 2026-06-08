@@ -30,7 +30,7 @@
       {% for page in pages %}
       <li class="nav-item">
         <a class="nav-link" href="{{ base_url }}{{ page.meta.slug }}/">
-          {{ page.meta.title }}
+          {% if page.meta.icon %}<i class="{{ page.meta.icon }}"></i>{% endif %}{{ page.meta.title }}
         </a>
       </li>
       {% endfor %}
@@ -80,7 +80,7 @@
       {% for page in pages %}
       <li>
         <a class="offcanvas-link" href="{{ base_url }}{{ page.meta.slug }}/" data-bs-dismiss="offcanvas">
-          <i class="fa-solid fa-file-lines"></i>{{ page.meta.title }}
+          <i class="{{ page.meta.icon or 'fa-solid fa-file-lines' }}"></i>{{ page.meta.title }}
         </a>
       </li>
       {% endfor %}
