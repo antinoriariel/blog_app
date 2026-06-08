@@ -73,11 +73,53 @@
     });
   }
 
+  // Fade post body elements via AOS CSS + IntersectionObserver (both edges)
+  function initPostScrollFadeOut() {
+    const postBody = document.querySelector('.post-body');
+    if (!postBody || !('IntersectionObserver' in window)) return;
+
+    const nav = document.getElementById('main-nav');
+    const navHeight = nav ? nav.offsetHeight : 60;
+
+    const targets = postBody.querySelectorAll(
+      ':scope > p, :scope > h2, :scope > h3, :scope > h4, :scope > h5, :scope > h6, ' +
+      ':scope > blockquote, :scope > pre, :scope > ul, :scope > ol, ' +
+      ':scope > figure, :scope > table, :scope > div, :scope > hr'
+    );
+
+    if (!targets.length) return;
+
+    targets.forEach(el => {
+      el.setAttribute('data-aos', 'fade-left');
+      el.setAttribute('data-aos-duration', '500');
+    });
+
+    const seen = new WeakSet();
+
+    // rootMargin shrinks the viewport: top edge = navbar bottom, bottom edge = viewport bottom
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(({ target: el, isIntersecting }) => {
+        if (isIntersecting) {
+          seen.add(el);
+          el.classList.add('aos-animate');
+        } else if (seen.has(el)) {
+          el.classList.remove('aos-animate');
+        }
+      });
+    }, {
+      threshold: 0,
+      rootMargin: `-${navHeight}px 0px 0px 0px`,
+    });
+
+    targets.forEach(el => observer.observe(el));
+  }
+
   // Run on DOM ready
   document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initNavbarScroll();
     initActiveNavLink();
     initSmoothScroll();
+    initPostScrollFadeOut();
   });
 })();
