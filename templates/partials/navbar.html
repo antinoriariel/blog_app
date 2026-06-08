@@ -52,20 +52,20 @@
   <div class="offcanvas-body">
     <ul class="offcanvas-nav">
       <li>
-        <a class="offcanvas-link" href="{{ base_url }}" data-bs-dismiss="offcanvas">
+        <a class="offcanvas-link" href="{{ base_url }}">
           <i class="fa-solid fa-house"></i>Inicio
         </a>
       </li>
       {% if features.archive %}
       <li>
-        <a class="offcanvas-link" href="{{ base_url }}archivo/" data-bs-dismiss="offcanvas">
+        <a class="offcanvas-link" href="{{ base_url }}archivo/">
           <i class="fa-solid fa-calendar-days"></i>Archivo
         </a>
       </li>
       {% endif %}
       {% for page in pages %}
       <li>
-        <a class="offcanvas-link" href="{{ base_url }}{{ page.meta.slug }}/" data-bs-dismiss="offcanvas">
+        <a class="offcanvas-link" href="{{ base_url }}{{ page.meta.slug }}/">
           <i class="{{ page.meta.icon or 'fa-solid fa-file-lines' }}"></i>{{ page.meta.title }}
         </a>
       </li>
