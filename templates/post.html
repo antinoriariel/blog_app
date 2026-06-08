@@ -39,14 +39,6 @@
 
         <!-- Post header -->
         <header class="post-header animate__animated animate__fadeInDown">
-          {% if post.meta.tags %}
-          <div class="tag-list mb-3">
-            {% for tag in post.meta.tags %}
-            <a href="{{ base_url }}etiquetas/{{ tag | slugify }}/" class="tag">{{ tag }}</a>
-            {% endfor %}
-          </div>
-          {% endif %}
-
           <h1 class="post-title">{{ post.meta.title }}</h1>
           <p class="post-summary lead">{{ post.meta.summary }}</p>
 
