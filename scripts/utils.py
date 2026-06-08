@@ -17,6 +17,60 @@ _MD_EXTENSIONS = ["tables", "fenced_code", "toc", "attr_list", "footnotes", "nl2
 # Handles trailing spaces after the dashes and both LF/CRLF line endings.
 _FRONTMATTER_RE = re.compile(r'\A---[ \t]*\n(.*?)\n---[ \t]*\n?(.*)', re.DOTALL)
 
+# Display math: $$...$$  (multiline content allowed)
+_MATH_DISPLAY_RE = re.compile(r'\$\$(.*?)\$\$', re.DOTALL)
+# Inline math: $...$ — no spaces at boundaries, no newlines inside, not preceded/followed by $
+_MATH_INLINE_RE = re.compile(r'(?<!\$)\$(?!\s)([^\$\n]+?)(?<!\s)\$(?!\$)')
+
+
+def _protect_math(text):
+    """Extract LaTeX blocks before Markdown processing to prevent symbol mangling.
+
+    Markdown interprets _ * < > as formatting; without protection, LaTeX like
+    x_{i} or a < b inside $...$ gets corrupted. This function replaces each
+    math block with an opaque placeholder and returns the mapping so
+    _restore_math() can re-insert the rendered HTML afterwards.
+
+    Display blocks ($$...$$) are surrounded by blank lines so that Markdown
+    wraps the placeholder in a <p>, which _restore_math() then removes.
+    """
+    slots = []  # list of ('display'|'inline', raw_latex_content)
+
+    def save_display(m):
+        idx = len(slots)
+        slots.append(('display', m.group(1)))
+        return f'\n\nMATHPH{idx}D\n\n'
+
+    def save_inline(m):
+        idx = len(slots)
+        slots.append(('inline', m.group(1)))
+        return f'MATHPH{idx}I'
+
+    text = _MATH_DISPLAY_RE.sub(save_display, text)
+    text = _MATH_INLINE_RE.sub(save_inline, text)
+    return text, slots
+
+
+def _restore_math(html, slots):
+    """Replace placeholders left by _protect_math() with KaTeX-ready HTML.
+
+    Display math → <div class="math-display">\\[...\\]</div>
+    Inline math  → <span class="math-inline">\\(...\\)</span>
+
+    The \\[...\\] and \\(...\\) delimiter pairs are the standard KaTeX
+    auto-render delimiters configured in the post template.
+    """
+    for idx, (kind, content) in enumerate(slots):
+        if kind == 'display':
+            block = f'<div class="math-display">\\[{content}\\]</div>'
+            # Markdown wraps the block-level placeholder in <p>; strip that wrapper.
+            # Use a lambda so re.sub does not interpret backslashes in `block`.
+            html = re.sub(rf'<p>\s*MATHPH{idx}D\s*</p>', lambda _: block, html)
+        else:
+            span = f'<span class="math-inline">\\({content}\\)</span>'
+            html = html.replace(f'MATHPH{idx}I', span)
+    return html
+
 
 def slugify(text):
     text = str(text).lower().strip()
@@ -59,9 +113,11 @@ def parse_entry(path):
         else:
             meta["date"] = datetime.strptime(str(raw), "%Y-%m-%d").date()
 
-    body_html = md_lib.markdown(body, extensions=_MD_EXTENSIONS)
+    body_protected, math_slots = _protect_math(body)
+    body_html = md_lib.markdown(body_protected, extensions=_MD_EXTENSIONS)
+    body_html = _restore_math(body_html, math_slots)
 
-    return {"meta": meta, "body": body, "body_html": body_html, "path": path}
+    return {"meta": meta, "body": body, "body_html": body_html, "path": path, "use_math": bool(math_slots)}
 
 
 def validate_frontmatter(meta, path, required=None):

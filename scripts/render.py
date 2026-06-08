@@ -47,6 +47,7 @@ def render_post(post, all_posts, pages, cfg, templates_dir):
         prev_post=prev_post,
         next_post=next_post,
         all_tags=group_by_tag(all_posts),
+        use_math=post.get("use_math", False),
     )
 
 
@@ -99,6 +100,7 @@ def render_page(page, all_posts, pages, cfg, templates_dir):
         page=page,
         pages=pages,
         all_tags=group_by_tag(all_posts),
+        use_math=page.get("use_math", False),
     )
 
 

@@ -861,3 +861,22 @@ img { max-width: 100%; height: auto; }
   .hero-title { font-size: 2rem; }
   .post-title { font-size: 1.6rem; }
 }
+
+/* ============================================================
+   MATH (KaTeX)
+   ============================================================ */
+.math-display {
+  overflow-x: auto;
+  text-align: center;
+  margin: 1.5rem 0;
+  padding: 0.25rem 0;
+}
+
+.math-inline {
+  white-space: nowrap;
+}
+
+/* Prevent KaTeX from inheriting the serif heading font */
+.post-body .katex {
+  font-size: 1.05em;
+}
