@@ -82,14 +82,9 @@
 
         <!-- Post footer -->
         <footer class="post-footer">
-          {% if post.meta.tags %}
-          <div class="post-tags">
-            <i class="fa-solid fa-tags me-2 text-muted"></i>
-            {% for tag in post.meta.tags %}
-            <a href="{{ base_url }}etiquetas/{{ tag | slugify }}/" class="tag">{{ tag }}</a>
-            {% endfor %}
-          </div>
-          {% endif %}
+          <span class="text-muted small">
+            <i class="fa-regular fa-clock me-1"></i>{{ post.body | reading_time }}
+          </span>
         </footer>
 
         <!-- Prev / Next navigation -->

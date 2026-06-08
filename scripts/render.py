@@ -17,8 +17,14 @@ def _make_env(templates_dir, cfg):
             return d.strftime(fmt)
         return str(d)
 
+    def reading_time(text):
+        words = len(str(text).split())
+        minutes = max(1, round(words / 200))
+        return f"{minutes} min de lectura"
+
     env.filters["date"] = format_date
     env.filters["slugify"] = slugify
+    env.filters["reading_time"] = reading_time
     env.globals["site"] = cfg["site"]
     env.globals["base_url"] = cfg["build"].get("base_url", "/")
     env.globals["features"] = cfg.get("features", {})
