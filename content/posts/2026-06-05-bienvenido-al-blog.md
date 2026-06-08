@@ -1,13 +1,13 @@
 ---
 title: "Bienvenido al blog"
-slug: "bienvenido-al-blog"
+slug: "bienvenido"
 date: "2026-06-05"
 summary: "Primera entrada del blog. Por qué lo armé, qué vas a encontrar aquí y cómo está construido desde cero con Python y Markdown."
 tags:
   - blog
   - meta
 category: "personal"
-author: "Nombre del Autor"
+author: "Ariel Antinori"
 featured: true
 published: true
 ---

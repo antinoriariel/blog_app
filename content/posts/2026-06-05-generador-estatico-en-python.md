@@ -1,6 +1,6 @@
 ---
 title: "Cómo funciona el generador estático"
-slug: "como-funciona-el-generador-estatico"
+slug: "como-funciona"
 date: "2026-06-05"
 summary: "Recorrido por el código Python que convierte archivos Markdown en páginas HTML: scanner, parser de frontmatter, validador, renderizador y ensamblador."
 tags:
@@ -8,7 +8,7 @@ tags:
   - markdown
   - tutorial
 category: "técnico"
-author: "Nombre del Autor"
+author: "Ariel Antinori"
 published: true
 ---
 
