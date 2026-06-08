@@ -20,13 +20,6 @@
         </a>
       </li>
       {% endif %}
-      {% if features.tags %}
-      <li class="nav-item">
-        <a class="nav-link" href="{{ base_url }}etiquetas/">
-          <i class="fa-solid fa-tags me-1"></i>Etiquetas
-        </a>
-      </li>
-      {% endif %}
       {% for page in pages %}
       <li class="nav-item">
         <a class="nav-link" href="{{ base_url }}{{ page.meta.slug }}/">
@@ -67,13 +60,6 @@
       <li>
         <a class="offcanvas-link" href="{{ base_url }}archivo/" data-bs-dismiss="offcanvas">
           <i class="fa-solid fa-calendar-days"></i>Archivo
-        </a>
-      </li>
-      {% endif %}
-      {% if features.tags %}
-      <li>
-        <a class="offcanvas-link" href="{{ base_url }}etiquetas/" data-bs-dismiss="offcanvas">
-          <i class="fa-solid fa-tags"></i>Etiquetas
         </a>
       </li>
       {% endif %}
