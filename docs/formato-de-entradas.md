@@ -71,10 +71,46 @@ published: true
 ---
 ```
 
+## Matemáticas con LaTeX
+
+El generador detecta expresiones LaTeX automáticamente y las renderiza con **KaTeX** en el navegador. No se necesita ningún campo especial en el frontmatter.
+
+### Sintaxis
+
+| Tipo | Delimitadores | Resultado |
+|------|--------------|-----------|
+| Inline | `$...$` | Fórmula dentro del párrafo |
+| Display | `$$...$$` | Fórmula centrada en su propio bloque |
+
+### Ejemplos
+
+Inline: escribí `$f(x) = x^2$` y se renderiza como fórmula dentro del texto.
+
+Display (en su propio párrafo, con líneas en blanco antes y después):
+
+```
+$$
+\lim_{x \to 0} \frac{\sin x}{x} = 1
+$$
+```
+
+### Cómo funciona
+
+Antes de procesar el Markdown, el generador extrae todos los bloques `$...$` y `$$...$$` y los reemplaza por marcadores opacos. Esto evita que el parser de Markdown corrompa caracteres como `_`, `*`, `<` o `>` dentro de las expresiones. Una vez generado el HTML, los marcadores se reemplazan por elementos `<span class="math-inline">` y `<div class="math-display">` con los delimitadores `\(...\)` y `\[...\]` que KaTeX auto-render interpreta en el navegador.
+
+KaTeX se carga únicamente en las páginas que contienen al menos una expresión matemática (detección automática en tiempo de build).
+
+### Consideraciones
+
+- El `$` que representa dinero puede disparar el parser si hay otro `$` en la misma línea. Escapalo con `\$` para prevenirlo.
+- Las expresiones inline no pueden contener saltos de línea.
+- KaTeX requiere conexión a la CDN de jsDelivr en la primera visita; las visitas siguientes usan la caché del navegador.
+
 ## Extensiones recomendadas
 - Tablas Markdown.
 - Listas de tareas.
 - Bloques de codigo con resaltado.
+- Expresiones matemáticas con LaTeX (`$...$` y `$$...$$`).
 - Enlaces e imagenes relativas.
 
 ## Ejemplo de archivo valido

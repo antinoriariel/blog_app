@@ -8,8 +8,10 @@ flowchart LR
   A[content/*.md] --> B[Scanner de archivos]
   B --> C[Parser de frontmatter]
   C --> D[Validador de esquema]
-  D --> E[Render Markdown a HTML]
-  E --> F[Plantilla de pagina]
+  D --> E1[Protección LaTeX]
+  E1 --> E2[Render Markdown a HTML]
+  E2 --> E3[Restauración LaTeX]
+  E3 --> F[Plantilla de pagina]
   F --> G[Salida dist/]
   H[assets/] --> G
 ```
@@ -24,8 +26,14 @@ Lee el frontmatter y transforma el contenido en una estructura de datos interna.
 ### 3. Validador
 Comprueba que existan los campos obligatorios y que el formato sea consistente.
 
-### 4. Renderizador Markdown
-Convierte el cuerpo del articulo a HTML usando el motor Markdown elegido.
+### 4. Renderizador Markdown y LaTeX
+Convierte el cuerpo del artículo a HTML. El flujo tiene tres pasos:
+
+1. **Protección LaTeX** (`_protect_math`): extrae los bloques `$...$` y `$$...$$` y los reemplaza por marcadores opacos antes de que el parser de Markdown los procese. Sin este paso, caracteres como `_` o `*` dentro de las expresiones serían interpretados como énfasis.
+2. **Conversión Markdown**: el parser genera el HTML con las extensiones habilitadas (tablas, bloques de código, TOC, etc.).
+3. **Restauración LaTeX** (`_restore_math`): reemplaza los marcadores por `<span class="math-inline">\(...\)</span>` (inline) o `<div class="math-display">\[...\]</div>` (display). KaTeX auto-render en el navegador localiza los delimitadores `\(...\)` y `\[...\]` y los convierte a SVG/HTML tipográfico.
+
+KaTeX se incluye en el HTML solo cuando el build detecta expresiones matemáticas en el contenido (`use_math=True`).
 
 ### 5. Motor de plantillas
 Inserta el contenido renderizado dentro de una pagina base con cabecera, navegacion, metadatos y pie.
