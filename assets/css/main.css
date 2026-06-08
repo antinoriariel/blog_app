@@ -232,6 +232,15 @@ img { max-width: 100%; height: auto; }
   padding: 3rem 0;
 }
 
+@media (min-width: 1400px) {
+  .post-container,
+  .hero .container,
+  .section-featured .container,
+  .section-posts .container {
+    max-width: 1050px;
+  }
+}
+
 .section-label {
   font-family: var(--font-body);
   font-size: 0.78rem;
@@ -632,7 +641,7 @@ img { max-width: 100%; height: auto; }
 
 /* Prev/Next navigation */
 .post-nav {
-  margin-top: 2.5rem;
+  margin-top: 1.5rem;
   padding-top: 2rem;
   border-top: 2px solid var(--color-border);
 }
