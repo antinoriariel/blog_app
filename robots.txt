@@ -1,0 +1,3 @@
+Sitemap: https://blog.antinori.com.ar/sitemap.xml
+User-agent: *
+Allow: /

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Etiqueta: markdown — Tiny blog</title>
+  <meta name="description" content="Entradas etiquetadas con "markdown" en Tiny blog">
+  <meta name="author" content="Ariel Antinori">
+  
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Tiny blog">
+  <meta property="og:description" content="Un blog sobre programación, cyberseguridad, desarrollo y proyectos personales.">
+  <meta property="og:url" content="https://blog.antinori.com.ar">
+  
+
+  <!-- Google Fonts: Fraunces (headings) + DM Sans (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..500&family=DM+Sans:ital,opsz,wght@0,9..40,300..600;1,9..40,300..500&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <!-- highlight.js syntax highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+
+  <!-- AOS (Animate On Scroll) -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="/assets/css/main.css">
+
+  
+</head>
+<body>
+
+  <!-- Navbar -->
+<nav class="navbar sticky-top site-navbar" id="main-nav">
+  <div class="container">
+    <a class="navbar-brand site-brand" href="/">
+      <i class="fa-solid fa-pen-nib brand-icon"></i>
+      <span class="brand-text">Tiny blog</span>
+    </a>
+
+    <!-- Desktop links (lg+) -->
+    <ul class="navbar-nav d-none d-lg-flex flex-row align-items-center gap-1 ms-auto mb-0">
+      <li class="nav-item">
+        <a class="nav-link" href="/">
+          <i class="fa-solid fa-house me-1"></i>Inicio
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="/archivo/">
+          <i class="fa-solid fa-calendar-days me-1"></i>Archivo
+        </a>
+      </li>
+      
+      
+      <li class="nav-item">
+        <a class="nav-link" href="/contacto/">
+          <i class="fa-solid fa-phone me-1"></i>Contacto
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="/sobre/">
+          <i class="fa-solid fa-cube me-1"></i>Sobre
+        </a>
+      </li>
+      
+    </ul>
+
+    <!-- Mobile toggler (below lg) -->
+    <button class="navbar-toggler d-lg-none" type="button"
+            data-bs-toggle="offcanvas" data-bs-target="#navOffcanvas"
+            aria-controls="navOffcanvas" aria-label="Abrir menú">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+</nav>
+
+<!-- Offcanvas mobile nav -->
+<div class="offcanvas offcanvas-end site-offcanvas" tabindex="-1"
+     id="navOffcanvas" aria-labelledby="navOffcanvasLabel">
+  <div class="offcanvas-header">
+    <a class="navbar-brand site-brand" href="/" id="navOffcanvasLabel">
+      <i class="fa-solid fa-pen-nib brand-icon"></i>
+      <span class="brand-text">Tiny blog</span>
+    </a>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+            aria-label="Cerrar"></button>
+  </div>
+  <div class="offcanvas-body">
+    <ul class="offcanvas-nav">
+      <li>
+        <a class="offcanvas-link" href="/">
+          <i class="fa-solid fa-house"></i>Inicio
+        </a>
+      </li>
+      
+      <li>
+        <a class="offcanvas-link" href="/archivo/">
+          <i class="fa-solid fa-calendar-days"></i>Archivo
+        </a>
+      </li>
+      
+      
+      <li>
+        <a class="offcanvas-link" href="/contacto/">
+          <i class="fa-solid fa-phone me-1"></i>Contacto
+        </a>
+      </li>
+      
+      <li>
+        <a class="offcanvas-link" href="/sobre/">
+          <i class="fa-solid fa-cube me-1"></i>Sobre
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+  <!-- Page content -->
+  <main id="main-content">
+    
+
+  <div class="container post-container">
+
+    <nav aria-label="breadcrumb" class="post-breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="/"><i class="fa-solid fa-house me-1"></i>Inicio</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="/etiquetas/">Etiquetas</a>
+        </li>
+        
+        <li class="breadcrumb-item active" aria-current="page">markdown</li>
+        
+      </ol>
+    </nav>
+
+    
+
+      <!-- Single tag view -->
+      <header class="page-header animate__animated animate__fadeInDown">
+        <h1 class="page-title">
+          <i class="fa-solid fa-tag me-2"></i>markdown
+        </h1>
+        <p class="text-muted">
+          1 entrada
+        </p>
+      </header>
+
+      
+      <div class="post-list">
+        
+        <article class="post-card animate__animated animate__fadeInUp" style="animation-delay: 0ms">
+          <div class="post-card-body">
+            <div class="post-meta mb-1">
+              <span><i class="fa-regular fa-calendar me-1"></i>05 Jun 2026</span>
+            </div>
+            <h3 class="post-card-title">
+              <a href="/posts/como-funciona/">Cómo funciona el generador estático</a>
+            </h3>
+            <p class="post-card-summary">Recorrido por el código Python que convierte archivos Markdown en páginas HTML: scanner, parser de frontmatter, validador, renderizador y ensamblador.</p>
+            
+            <div class="tag-list mt-2">
+              
+              <a href="/etiquetas/python/" class="tag ">python</a>
+              
+              <a href="/etiquetas/markdown/" class="tag tag-active">markdown</a>
+              
+              <a href="/etiquetas/tutorial/" class="tag ">tutorial</a>
+              
+            </div>
+            
+          </div>
+        </article>
+        
+      </div>
+      
+
+    
+
+  </div>
+
+
+  </main>
+
+  <!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="row align-items-center gy-3">
+      <div class="col-md-6">
+        <p class="footer-brand mb-1">
+          <i class="fa-solid fa-pen-nib me-2"></i>Tiny blog
+        </p>
+        <p class="footer-desc mb-0">Un blog sobre programación, cyberseguridad, desarrollo y proyectos personales.</p>
+      </div>
+      <div class="col-md-6 text-md-end">
+        <div class="footer-links mb-2">
+          
+          <a href="https://github.com/antinoriariel" title="GitHub" target="_blank" rel="noopener">
+            <i class="fa-brands fa-github"></i>
+          </a>
+          
+          
+          <a href="https://youtube.com/@antinori_ariel" title="YouTube" target="_blank" rel="noopener">
+            <i class="fa-brands fa-youtube"></i>
+          </a>
+          
+          
+          <a href="https://x.com/antinori_ariel" title="X" target="_blank" rel="noopener">
+            <i class="fa-brands fa-x-twitter"></i>
+          </a>
+          
+        </div>
+        <p class="footer-copy mb-0">
+          &copy; Tiny blog &mdash;
+          <span>Escrito con ❤️ desde ARG</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- highlight.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <!-- AOS -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <!-- Custom JS -->
+  <script src="/assets/js/main.js"></script>
+
+  
+  
+</body>
+</html>

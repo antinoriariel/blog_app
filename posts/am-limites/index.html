@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Límites: definición, tipos e indeterminaciones — Tiny blog</title>
+  <meta name="description" content="Una introducción al concepto de límite en cálculo: definición formal, tipos de límites e indeterminaciones con ejemplos en LaTeX.">
+  <meta name="author" content="Ariel Antinori">
+  
+<meta name="keywords" content="cálculo, matemáticas">
+<link rel="canonical" href="https://blog.antinori.com.ar/posts/am-limites/">
+
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Límites: definición, tipos e indeterminaciones">
+  <meta property="og:description" content="Una introducción al concepto de límite en cálculo: definición formal, tipos de límites e indeterminaciones con ejemplos en LaTeX.">
+  <meta property="og:url" content="https://blog.antinori.com.ar/posts/am-limites/">
+  
+
+
+
+  <!-- Google Fonts: Fraunces (headings) + DM Sans (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..500&family=DM+Sans:ital,opsz,wght@0,9..40,300..600;1,9..40,300..500&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <!-- highlight.js syntax highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+
+  <!-- AOS (Animate On Scroll) -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="/assets/css/main.css">
+
+  
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+
+
+</head>
+<body>
+
+  <!-- Navbar -->
+<nav class="navbar sticky-top site-navbar" id="main-nav">
+  <div class="container">
+    <a class="navbar-brand site-brand" href="/">
+      <i class="fa-solid fa-pen-nib brand-icon"></i>
+      <span class="brand-text">Tiny blog</span>
+    </a>
+
+    <!-- Desktop links (lg+) -->
+    <ul class="navbar-nav d-none d-lg-flex flex-row align-items-center gap-1 ms-auto mb-0">
+      <li class="nav-item">
+        <a class="nav-link" href="/">
+          <i class="fa-solid fa-house me-1"></i>Inicio
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="/archivo/">
+          <i class="fa-solid fa-calendar-days me-1"></i>Archivo
+        </a>
+      </li>
+      
+      
+      <li class="nav-item">
+        <a class="nav-link" href="/contacto/">
+          <i class="fa-solid fa-phone me-1"></i>Contacto
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="/sobre/">
+          <i class="fa-solid fa-cube me-1"></i>Sobre
+        </a>
+      </li>
+      
+    </ul>
+
+    <!-- Mobile toggler (below lg) -->
+    <button class="navbar-toggler d-lg-none" type="button"
+            data-bs-toggle="offcanvas" data-bs-target="#navOffcanvas"
+            aria-controls="navOffcanvas" aria-label="Abrir menú">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+</nav>
+
+<!-- Offcanvas mobile nav -->
+<div class="offcanvas offcanvas-end site-offcanvas" tabindex="-1"
+     id="navOffcanvas" aria-labelledby="navOffcanvasLabel">
+  <div class="offcanvas-header">
+    <a class="navbar-brand site-brand" href="/" id="navOffcanvasLabel">
+      <i class="fa-solid fa-pen-nib brand-icon"></i>
+      <span class="brand-text">Tiny blog</span>
+    </a>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+            aria-label="Cerrar"></button>
+  </div>
+  <div class="offcanvas-body">
+    <ul class="offcanvas-nav">
+      <li>
+        <a class="offcanvas-link" href="/">
+          <i class="fa-solid fa-house"></i>Inicio
+        </a>
+      </li>
+      
+      <li>
+        <a class="offcanvas-link" href="/archivo/">
+          <i class="fa-solid fa-calendar-days"></i>Archivo
+        </a>
+      </li>
+      
+      
+      <li>
+        <a class="offcanvas-link" href="/contacto/">
+          <i class="fa-solid fa-phone me-1"></i>Contacto
+        </a>
+      </li>
+      
+      <li>
+        <a class="offcanvas-link" href="/sobre/">
+          <i class="fa-solid fa-cube me-1"></i>Sobre
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+  <!-- Page content -->
+  <main id="main-content">
+    
+
+  <div class="container post-container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="post-breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="/"><i class="fa-solid fa-house me-1"></i>Inicio</a>
+            </li>
+            
+            <li class="breadcrumb-item text-muted">Análisis Matemático</li>
+            
+            <li class="breadcrumb-item active" aria-current="page">Límites: definición, tipos e indeterminaciones</li>
+          </ol>
+        </nav>
+
+        <!-- Post header -->
+        <header class="post-header animate__animated animate__fadeIn">
+          <h1 class="post-title">Límites: definición, tipos e indeterminaciones</h1>
+          <p class="post-summary lead">Una introducción al concepto de límite en cálculo: definición formal, tipos de límites e indeterminaciones con ejemplos en LaTeX.</p>
+
+          <div class="post-byline">
+            <span>
+              <i class="fa-regular fa-calendar me-1"></i>
+              <time datetime="2026-06-07">07 Jun 2026</time>
+            </span>
+            
+            <span class="ms-4">
+              <i class="fa-regular fa-user me-1"></i>Ariel Antinori
+            </span>
+            
+            
+            <span class="ms-4">
+              <i class="fa-solid fa-folder me-1"></i>Análisis Matemático
+            </span>
+            
+          </div>
+        </header>
+
+        <!-- Cover image -->
+        
+
+        <!-- Post body -->
+        <div class="post-body animate__animated animate__fadeIn">
+          <h2 id="definicion-de-limite">Definición de límite</h2>
+<p>El <strong>límite</strong> es uno de los conceptos fundamentales del cálculo. Informalmente, decimos que el límite de una función <span class="math-inline">\(f(x)\)</span> cuando <span class="math-inline">\(x\)</span> se aproxima a <span class="math-inline">\(a\)</span> es <span class="math-inline">\(L\)</span> si los valores de <span class="math-inline">\(f(x)\)</span> se acercan arbitrariamente a <span class="math-inline">\(L\)</span> conforme <span class="math-inline">\(x\)</span> se acerca a <span class="math-inline">\(a\)</span>.</p>
+<p>La notación es:</p>
+<div class="math-display">\[\lim_{x \to a} f(x) = L\]</div>
+<h3 id="definicion-formal-epsilon-delta">Definición formal (épsilon-delta)</h3>
+<p>La definición rigurosa, atribuida a Cauchy y Weierstrass, establece:</p>
+<div class="math-display">\[\lim_{x \to a} f(x) = L \iff \forall\, \varepsilon > 0,\; \exists\, \delta > 0 : 0 < |x - a| < \delta \implies |f(x) - L| < \varepsilon\]</div>
+<p>En palabras: para todo margen de error <span class="math-inline">\(\varepsilon\)</span> que elijamos alrededor de <span class="math-inline">\(L\)</span>, existe un entorno <span class="math-inline">\(\delta\)</span> alrededor de <span class="math-inline">\(a\)</span> tal que todos los valores de <span class="math-inline">\(f\)</span> en ese entorno caen dentro del margen.</p>
+<h2 id="tipos-de-limites">Tipos de límites</h2>
+<h3 id="limites-laterales">Límites laterales</h3>
+<p>Los límites laterales evalúan el comportamiento de <span class="math-inline">\(f\)</span> al aproximarse a <span class="math-inline">\(a\)</span> desde un solo lado.</p>
+<p><strong>Límite por la izquierda</strong> (desde valores menores que <span class="math-inline">\(a\)</span>):</p>
+<div class="math-display">\[\lim_{x \to a^-} f(x) = L^-\]</div>
+<p><strong>Límite por la derecha</strong> (desde valores mayores que <span class="math-inline">\(a\)</span>):</p>
+<div class="math-display">\[\lim_{x \to a^+} f(x) = L^+\]</div>
+<p>El límite bilateral existe si y solo si ambos límites laterales coinciden:</p>
+<div class="math-display">\[\lim_{x \to a} f(x) = L \iff \lim_{x \to a^-} f(x) = \lim_{x \to a^+} f(x) = L\]</div>
+<h3 id="limites-al-infinito">Límites al infinito</h3>
+<p>Describen el comportamiento de <span class="math-inline">\(f(x)\)</span> cuando <span class="math-inline">\(x\)</span> crece o decrece sin cota:</p>
+<div class="math-display">\[\lim_{x \to +\infty} \frac{1}{x} = 0 \qquad \lim_{x \to -\infty} \frac{1}{x} = 0\]</div>
+<h3 id="limites-infinitos">Límites infinitos</h3>
+<p>Ocurren cuando <span class="math-inline">\(f(x)\)</span> crece sin cota al acercarse a <span class="math-inline">\(a\)</span>:</p>
+<div class="math-display">\[\lim_{x \to 0^+} \frac{1}{x} = +\infty \qquad \lim_{x \to 0^-} \frac{1}{x} = -\infty\]</div>
+<p>En este caso la función no tiene límite en <span class="math-inline">\(x = 0\)</span>, pero los límites laterales infinitos describen su comportamiento.</p>
+<h3 id="ejemplo-limite-de-un-polinomio">Ejemplo: límite de un polinomio</h3>
+<p>Para polinomios, el límite se calcula por sustitución directa:</p>
+<div class="math-display">\[\lim_{x \to 3} (x^2 - 2x + 1) = 3^2 - 2(3) + 1 = 4\]</div>
+<h2 id="indeterminaciones">Indeterminaciones</h2>
+<p>Una <strong>indeterminación</strong> es una forma que surge al calcular un límite y que no permite determinar el resultado directamente. Las formas indeterminadas más comunes son:</p>
+<div class="math-display">\[\frac{0}{0}, \quad \frac{\infty}{\infty}, \quad 0 \cdot \infty, \quad \infty - \infty, \quad 0^0, \quad 1^\infty, \quad \infty^0\]</div>
+<h3 id="indeterminacion-mathph42i">Indeterminación <span class="math-inline">\(\tfrac{0}{0}\)</span></h3>
+<p>El caso más frecuente. Se resuelve factorizando, racionalizado o aplicando la regla de L'Hôpital.</p>
+<p><strong>Ejemplo por factorización:</strong></p>
+<div class="math-display">\[\lim_{x \to 2} \frac{x^2 - 4}{x - 2} = \lim_{x \to 2} \frac{(x-2)(x+2)}{x-2} = \lim_{x \to 2} (x+2) = 4\]</div>
+<h3 id="indeterminacion-mathph43i">Indeterminación <span class="math-inline">\(\tfrac{\infty}{\infty}\)</span></h3>
+<p>Se divide numerador y denominador por la potencia dominante.</p>
+<p><strong>Ejemplo:</strong></p>
+<div class="math-display">\[\lim_{x \to \infty} \frac{3x^2 + x}{5x^2 - 7} = \lim_{x \to \infty} \frac{3 + \tfrac{1}{x}}{5 - \tfrac{7}{x^2}} = \frac{3}{5}\]</div>
+<h3 id="regla-de-lhopital">Regla de L'Hôpital</h3>
+<p>Si <span class="math-inline">\(\lim_{x \to a} f(x) = \lim_{x \to a} g(x) = 0\)</span> (o <span class="math-inline">\(\pm\infty\)</span>), y <span class="math-inline">\(g'(x) \neq 0\)</span> en un entorno de <span class="math-inline">\(a\)</span>, entonces:</p>
+<div class="math-display">\[\lim_{x \to a} \frac{f(x)}{g(x)} = \lim_{x \to a} \frac{f'(x)}{g'(x)}\]</div>
+<p><strong>Ejemplo:</strong></p>
+<div class="math-display">\[\lim_{x \to 0} \frac{\sin x}{x} \;\overset{\frac{0}{0}}{=}\; \lim_{x \to 0} \frac{\cos x}{1} = 1\]</div>
+<h3 id="indeterminacion-mathph48i">Indeterminación <span class="math-inline">\(1^\infty\)</span></h3>
+<p>Se transforma usando la identidad <span class="math-inline">\(u^v = e^{v \ln u}\)</span>.</p>
+<p><strong>Límite fundamental:</strong></p>
+<div class="math-display">\[\lim_{x \to \infty} \left(1 + \frac{1}{x}\right)^x = e\]</div>
+<p>De forma general:</p>
+<div class="math-display">\[\lim_{x \to \infty} \left(1 + \frac{k}{x}\right)^x = e^k\]</div>
+<h3 id="indeterminacion-mathph50i">Indeterminación <span class="math-inline">\(0 \cdot \infty\)</span></h3>
+<p>Se reescribe como <span class="math-inline">\(\tfrac{0}{1/\infty}\)</span> o <span class="math-inline">\(\tfrac{\infty}{1/0}\)</span> para convertirla en <span class="math-inline">\(\tfrac{0}{0}\)</span> o <span class="math-inline">\(\tfrac{\infty}{\infty}\)</span>.</p>
+<p><strong>Ejemplo:</strong></p>
+<div class="math-display">\[\lim_{x \to 0^+} x \ln x = \lim_{x \to 0^+} \frac{\ln x}{1/x} \;\overset{\frac{-\infty}{+\infty}}{=}\; \lim_{x \to 0^+} \frac{1/x}{-1/x^2} = \lim_{x \to 0^+} (-x) = 0\]</div>
+<h2 id="propiedades-de-los-limites">Propiedades de los límites</h2>
+<p>Sean <span class="math-inline">\(\lim_{x \to a} f(x) = L\)</span> y <span class="math-inline">\(\lim_{x \to a} g(x) = M\)</span>. Entonces:</p>
+<div class="math-display">\[\lim_{x \to a} [f(x) \pm g(x)] = L \pm M\]</div>
+<div class="math-display">\[\lim_{x \to a} [f(x) \cdot g(x)] = L \cdot M\]</div>
+<div class="math-display">\[\lim_{x \to a} \frac{f(x)}{g(x)} = \frac{L}{M}, \quad M \neq 0\]</div>
+<div class="math-display">\[\lim_{x \to a} [f(x)]^n = L^n\]</div>
+<h2 id="conclusion">Conclusión</h2>
+<p>Los límites son la base sobre la que se construyen la continuidad, la derivada y la integral. Dominar su cálculo —reconociendo las formas indeterminadas y aplicando las técnicas adecuadas— es el primer paso esencial en el estudio del análisis matemático.</p>
+        </div>
+
+        <!-- Post footer -->
+        <footer class="post-footer">
+          <span class="text-muted small">
+            <i class="fa-regular fa-clock me-1"></i>3 min de lectura
+          </span>
+        </footer>
+
+        <!-- Prev / Next navigation -->
+        
+        <nav class="post-nav" aria-label="Navegación entre entradas">
+          <div class="row g-3">
+            
+            <div class="col-6">
+              <a href="/posts/bienvenido/" class="post-nav-link post-nav-prev">
+                <span class="post-nav-label">
+                  <i class="fa-solid fa-arrow-left me-1"></i>Anterior
+                </span>
+                <span class="post-nav-title">Bienvenido al blog</span>
+              </a>
+            </div>
+            
+            
+          </div>
+        </nav>
+        
+
+      </div>
+
+      <!-- Sidebar -->
+      <div class="col-lg-3 offset-lg-1">
+        <aside class="sidebar post-sidebar">
+          
+          <div class="sidebar-widget">
+            <h4 class="sidebar-title">
+              <i class="fa-solid fa-tags me-2"></i>Etiquetas
+            </h4>
+            <div class="tag-cloud">
+              
+              <a href="/etiquetas/blog/" class="tag ">
+                blog
+              </a>
+              
+              <a href="/etiquetas/calculo/" class="tag tag-active">
+                cálculo
+              </a>
+              
+              <a href="/etiquetas/markdown/" class="tag ">
+                markdown
+              </a>
+              
+              <a href="/etiquetas/matematicas/" class="tag tag-active">
+                matemáticas
+              </a>
+              
+              <a href="/etiquetas/meta/" class="tag ">
+                meta
+              </a>
+              
+              <a href="/etiquetas/python/" class="tag ">
+                python
+              </a>
+              
+              <a href="/etiquetas/tutorial/" class="tag ">
+                tutorial
+              </a>
+              
+            </div>
+          </div>
+          
+        </aside>
+      </div>
+
+    </div>
+  </div>
+
+
+  </main>
+
+  <!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="row align-items-center gy-3">
+      <div class="col-md-6">
+        <p class="footer-brand mb-1">
+          <i class="fa-solid fa-pen-nib me-2"></i>Tiny blog
+        </p>
+        <p class="footer-desc mb-0">Un blog sobre programación, cyberseguridad, desarrollo y proyectos personales.</p>
+      </div>
+      <div class="col-md-6 text-md-end">
+        <div class="footer-links mb-2">
+          
+          <a href="https://github.com/antinoriariel" title="GitHub" target="_blank" rel="noopener">
+            <i class="fa-brands fa-github"></i>
+          </a>
+          
+          
+          <a href="https://youtube.com/@antinori_ariel" title="YouTube" target="_blank" rel="noopener">
+            <i class="fa-brands fa-youtube"></i>
+          </a>
+          
+          
+          <a href="https://x.com/antinori_ariel" title="X" target="_blank" rel="noopener">
+            <i class="fa-brands fa-x-twitter"></i>
+          </a>
+          
+        </div>
+        <p class="footer-copy mb-0">
+          &copy; Tiny blog &mdash;
+          <span>Escrito con ❤️ desde ARG</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- highlight.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <!-- AOS -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <!-- Custom JS -->
+  <script src="/assets/js/main.js"></script>
+
+  
+  
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+  onload="renderMathInElement(document.querySelector('.post-body'), {delimiters: [{left: '\\[', right: '\\]', display: true}, {left: '\\(', right: '\\)', display: false}], throwOnError: false})"></script>
+
+
+</body>
+</html>
