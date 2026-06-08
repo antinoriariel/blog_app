@@ -54,6 +54,26 @@ published: true
 | `featured`  | booleano  | no          | `true` para destacar la entrada en la portada.               |
 | `published` | booleano  | no          | `false` para excluir del build. Por defecto `true`.          |
 
+### Campos adicionales para páginas estáticas
+
+| Campo  | Tipo  | Obligatorio | Descripción                                                                                 |
+|--------|-------|-------------|---------------------------------------------------------------------------------------------|
+| `icon` | texto | no          | Clases CSS del `<i>` que aparece junto al título en el navbar. Ejemplo: `fa-solid fa-user`. |
+
+Ejemplo:
+
+```yaml
+---
+title: "Sobre"
+slug: "sobre"
+icon: "fa-solid fa-user me-1"
+summary: "Quién escribe este blog."
+published: true
+---
+```
+
+Si se omite `icon`, el menú móvil usa `fa-solid fa-file-lines` como icono por defecto. En el menú de escritorio no se muestra ningún icono.
+
 ## Convenciones de nombre de archivo
 
 ```

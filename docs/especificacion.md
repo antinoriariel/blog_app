@@ -43,6 +43,9 @@ El proyecto consiste en un blog estatica generado a partir de archivos Markdown 
 - `published`
 - `featured`
 
+### Metadatos exclusivos de páginas estáticas
+- `icon` — clases CSS de Font Awesome para el ícono que aparece junto al título en el navbar (p.ej. `fa-solid fa-user me-1`). Opcional; si se omite, el menú móvil usa `fa-solid fa-file-lines` y el menú de escritorio no muestra ícono.
+
 ## Salidas esperadas
 - `index.html` como portada.
 - Paginas individuales para cada entrada.

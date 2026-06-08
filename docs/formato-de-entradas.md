@@ -51,6 +51,26 @@ published: true
 - Los fragmentos de codigo deben ir en fences y, si aplica, indicar el lenguaje.
 - Las tablas, listas y citas deben renderizarse sin estilos inline.
 
+## Campos exclusivos de páginas estáticas
+
+Las páginas en `content/pages/` aceptan un campo adicional no disponible en entradas de blog:
+
+| Campo  | Tipo  | Descripción                                                                                       |
+|--------|-------|---------------------------------------------------------------------------------------------------|
+| `icon` | texto | Clases CSS del `<i>` de Font Awesome que aparece junto al título en el navbar. Ej: `fa-solid fa-user me-1`. Si se omite, el menú móvil usa `fa-solid fa-file-lines`; el menú de escritorio no muestra ícono. |
+
+Ejemplo de frontmatter de página con ícono:
+
+```yaml
+---
+title: "Sobre"
+slug: "sobre"
+icon: "fa-solid fa-user me-1"
+summary: "Quién escribe este blog."
+published: true
+---
+```
+
 ## Extensiones recomendadas
 - Tablas Markdown.
 - Listas de tareas.
