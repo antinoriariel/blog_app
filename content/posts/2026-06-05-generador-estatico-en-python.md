@@ -81,6 +81,32 @@ El cuerpo Markdown se convierte a HTML usando la librería `markdown` de Python 
 
 El HTML resultante se inserta en una plantilla Jinja2 con `{{ post.body_html | safe }}`. El resaltado de sintaxis lo maneja **highlight.js** en el cliente: detecta automáticamente el lenguaje si no se especifica en el bloque, y aplica el tema `atom-one-dark`.
 
+## Soporte de LaTeX
+
+Las expresiones matemáticas se escriben con la sintaxis estándar de LaTeX y se renderizan con **KaTeX** en el navegador. Hay dos modos:
+
+| Modo | Sintaxis | Resultado |
+|------|---------|-----------|
+| Inline | `$f(x) = x^2$` | Fórmula dentro del párrafo |
+| Display | `$$\lim_{x \to 0} \frac{\sin x}{x} = 1$$` | Fórmula centrada en bloque propio |
+
+El desafío es que el parser de Markdown interpreta caracteres como `_`, `*`, `<` o `>` antes de que lleguen a KaTeX. Para evitarlo, el renderizador aplica un patrón de protección/restauración en dos pasos:
+
+```python
+# Antes del render: reemplazar $...$ y $$...$$ por tokens opacos
+body = _protect_math(body)
+
+# Render Markdown normal
+html = markdown.markdown(body, extensions=[...])
+
+# Después del render: restaurar los tokens como HTML para KaTeX
+html = _restore_math(html)
+```
+
+Los tokens de display se convierten en `<div class="math-display">\[...\]</div>` y los inline en `<span class="math-inline">\(...\)</span>`. KaTeX auto-render localiza los delimitadores `\[...\]` y `\(...\)` y los convierte a tipografía matemática.
+
+La detección es automática: si el build encuentra al menos una expresión, agrega las etiquetas `<link>` y `<script>` de KaTeX únicamente en esa página. Las páginas sin matemáticas no cargan nada extra.
+
 ## El ensamblador
 
 Para cada entrada publicada se genera:

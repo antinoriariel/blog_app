@@ -5,7 +5,8 @@ El blog debe sentirse editorial, moderno y limpio. La composición debe prioriza
 
 ## Stack visual
 - **Bootstrap** para layout, rejillas, espaciado y componentes.
-- **animate.css** para transiciones de entrada sutiles.
+- **animate.css** para transiciones de entrada en carga de página.
+- **AOS (Animate On Scroll)** para animaciones de entrada y salida basadas en scroll en posts.
 - **Font Awesome** para iconos funcionales y decorativos.
 - **Google Fonts** para tipografía principal y secundaria.
 
@@ -29,10 +30,24 @@ El blog debe sentirse editorial, moderno y limpio. La composición debe prioriza
 - Footer con enlaces útiles y metadatos del sitio.
 
 ## Animaciones
-- Aparición progresiva de hero, tarjetas y encabezados.
-- Transiciones de opacidad y desplazamiento cortas.
-- Sin animaciones intrusivas ni loops permanentes.
-- Respetar la claridad del contenido por encima del efecto.
+
+El sistema usa **animate.css** junto con `IntersectionObserver` para dos tipos de animaciones de scroll, sin bloquear el render ni depender de librerías adicionales.
+
+### Entrada progresiva (scroll hacia abajo)
+
+Las tarjetas de post (`.post-card`), los grupos de archivo (`.archive-month`) y los ítems del índice de etiquetas (`.tag-index-item`) aparecen con `fadeInUp` cuando entran al viewport por primera vez. Una vez animados, el observer deja de observarlos (`unobserve`).
+
+### Salida con desvanecimiento (scroll en posts largos)
+
+En las páginas de entrada individual se usa **AOS** (`mirror: true`, `once: false`) para animar los elementos de bloque del cuerpo del post (`p`, `h2`–`h6`, `blockquote`, `pre`, `ul`, `ol`, `figure`, `table`, `div`, `hr`).
+
+El JS asigna `data-aos="fade-left"` a cada uno de esos elementos antes de que AOS se inicialice. Con esa configuración:
+
+- **Al entrar al viewport**: el elemento aparece con un deslizamiento desde la izquierda (fade-left).
+- **Al salir del viewport** (arriba o abajo): AOS invierte la animación, produciendo un desvanecimiento hacia la izquierda.
+- El umbral superior se alinea con la altura del navbar vía el parámetro `offset` de `AOS.init()`.
+
+El `overflow-x: hidden` en `body` previene la barra de scroll horizontal durante el deslizamiento lateral.
 
 ## Accesibilidad
 - Contraste suficiente entre texto y fondo.

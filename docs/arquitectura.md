@@ -16,7 +16,7 @@ flowchart LR
   H[assets/] --> G
 ```
 
-## Componentes propuestos
+## Componentes
 ### 1. Scanner
 Recorre la carpeta de contenido, identifica archivos publicables y arma la lista de entradas.
 
